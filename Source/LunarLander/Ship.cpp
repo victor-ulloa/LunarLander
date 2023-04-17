@@ -4,6 +4,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -12,8 +13,10 @@ AShip::AShip()
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
+	ShipMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ShipMesh"));
 	RootComponent = ShipMesh;
+	ShipMesh->SetSimulatePhysics(true);
+	ShipMesh->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
 
 	CapsuleCollider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleCollider"));
 	CapsuleCollider->SetupAttachment(RootComponent);
@@ -60,4 +63,7 @@ void AShip::Thrust(const FInputActionValue &Value)
 	const FVector2D ThrustValue = Value.Get<FVector2D>();
 
 	UE_LOG(LogTemp, Display, TEXT("X: %f     Y: %f"), ThrustValue.X, ThrustValue.Y);
+
+	FVector VerticalForce = FVector(0, 0, VerticalThrusterForce * ThrustValue.Y);
+	ShipMesh->AddForce(VerticalForce, NAME_None, true);
 }
