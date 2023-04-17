@@ -6,6 +6,12 @@
 #include "GameFramework/Pawn.h"
 #include "Ship.generated.h"
 
+class UCameraComponent;
+class UInputMappingContext;
+class UInputAction;
+class UCapsuleComponent;
+struct FInputActionValue;
+
 UCLASS()
 class LUNARLANDER_API AShip : public APawn
 {
@@ -18,6 +24,20 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
+	UCameraComponent *Camera;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
+	UStaticMeshComponent *ShipMesh;
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	UCapsuleComponent *CapsuleCollider;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
+	UInputMappingContext *ShipMappingContext;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
+	UInputAction *ThrustAction;
+
+	void Thrust(const FInputActionValue &Value);
 
 public:	
 	// Called every frame
