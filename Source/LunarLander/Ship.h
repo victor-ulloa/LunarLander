@@ -50,5 +50,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	float VerticalThrusterForce;
+	UPROPERTY(EditAnywhere, Category = Input)
+	float HorizontalThrusterForce;
 
 };

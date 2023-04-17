@@ -64,6 +64,6 @@ void AShip::Thrust(const FInputActionValue &Value)
 
 	UE_LOG(LogTemp, Display, TEXT("X: %f     Y: %f"), ThrustValue.X, ThrustValue.Y);
 
-	FVector VerticalForce = FVector(0, 0, VerticalThrusterForce * ThrustValue.Y);
+	FVector VerticalForce = FVector(0, HorizontalThrusterForce * ThrustValue.X, VerticalThrusterForce * ThrustValue.Y);
 	ShipMesh->AddForce(VerticalForce, NAME_None, true);
 }
