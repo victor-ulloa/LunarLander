@@ -53,4 +53,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	float HorizontalThrusterForce;
 
+	UFUNCTION()    
+    void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 };

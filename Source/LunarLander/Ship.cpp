@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "BaseObstacle.h"
 
 // Sets default values
 AShip::AShip()
@@ -17,7 +18,7 @@ AShip::AShip()
 	RootComponent = ShipMesh;
 	ShipMesh->SetSimulatePhysics(true);
 	ShipMesh->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
-
+	
 	CapsuleCollider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleCollider"));
 	CapsuleCollider->SetupAttachment(RootComponent);
 
@@ -40,6 +41,7 @@ void AShip::BeginPlay()
 			Subsystem->AddMappingContext(ShipMappingContext, 0);
 		}
 	}
+	ShipMesh->OnComponentHit.AddDynamic(this, &AShip::OnHit);
 }
 
 // Called every frame
@@ -62,8 +64,16 @@ void AShip::Thrust(const FInputActionValue &Value)
 {
 	const FVector2D ThrustValue = Value.Get<FVector2D>();
 
-	UE_LOG(LogTemp, Display, TEXT("X: %f     Y: %f"), ThrustValue.X, ThrustValue.Y);
+	// UE_LOG(LogTemp, Display, TEXT("X: %f     Y: %f"), ThrustValue.X, ThrustValue.Y);
 
 	FVector VerticalForce = FVector(0, HorizontalThrusterForce * ThrustValue.X, VerticalThrusterForce * ThrustValue.Y);
 	ShipMesh->AddForce(VerticalForce, NAME_None, true);
+}
+
+void AShip::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Display, TEXT("TEST"));
+	if(ABaseObstacle *Obstacle = Cast<ABaseObstacle>(OtherActor)) {
+		UE_LOG(LogTemp, Warning, TEXT("got it"));
+	}
 }
