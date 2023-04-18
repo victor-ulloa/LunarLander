@@ -69,6 +69,13 @@ void AShip::Thrust(const FInputActionValue &Value)
 void AShip::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	if(OtherActor->IsA(ABaseObstacle::StaticClass())) {
-		UE_LOG(LogTemp, Warning, TEXT("got it"));
+		Health -= NormalImpulse.Length()/1000.f;
+
+		UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+
+		if (Health <= 0){
+			UE_LOG(LogTemp, Display, TEXT("DIES"));
+		}
+
 	}
 }
