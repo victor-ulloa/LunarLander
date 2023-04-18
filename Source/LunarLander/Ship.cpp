@@ -4,7 +4,6 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "BaseObstacle.h"
 
@@ -14,13 +13,10 @@ AShip::AShip()
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ShipMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ShipMesh"));
+	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
 	RootComponent = ShipMesh;
 	ShipMesh->SetSimulatePhysics(true);
 	ShipMesh->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
-	
-	CapsuleCollider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleCollider"));
-	CapsuleCollider->SetupAttachment(RootComponent);
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(RootComponent);
@@ -72,8 +68,7 @@ void AShip::Thrust(const FInputActionValue &Value)
 
 void AShip::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Display, TEXT("TEST"));
-	if(ABaseObstacle *Obstacle = Cast<ABaseObstacle>(OtherActor)) {
+	if(OtherActor->IsA(ABaseObstacle::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("got it"));
 	}
 }

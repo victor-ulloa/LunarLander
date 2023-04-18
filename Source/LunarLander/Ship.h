@@ -10,7 +10,6 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UCapsuleComponent;
-class USkeletalMeshComponent;
 struct FInputActionValue;
 
 UCLASS()
@@ -29,9 +28,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	UCameraComponent *Camera;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent *ShipMesh;
-	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	UCapsuleComponent *CapsuleCollider;
+	UStaticMeshComponent *ShipMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputMappingContext *ShipMappingContext;
