@@ -13,6 +13,7 @@ ABaseEffectorActor::ABaseEffectorActor()
 	RootComponent = Mesh;
 
 	PointEffector = CreateDefaultSubobject<UPointEffectorComponent>(TEXT("PointEffector"));
+	PointEffector->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned

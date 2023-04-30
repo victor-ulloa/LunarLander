@@ -13,5 +13,16 @@ UCLASS()
 class LUNARLANDER_API UPointEffectorComponent : public USphereComponent
 {
 	GENERATED_BODY()
+
+public:
+	UPointEffectorComponent();
 	
+private:
+	UPROPERTY(EditAnywhere, Category = "Effector")
+	bool bIsPush;
+
+	UFUNCTION()
+	void OnBeginOverlap(UPrimitiveComponent *Comp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+	UFUNCTION()
+	void OnEndOverlap(UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };
