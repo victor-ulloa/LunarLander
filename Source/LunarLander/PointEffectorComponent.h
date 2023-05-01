@@ -9,7 +9,7 @@
 class AShip;
 
 /**
- * 
+ *
  */
 UCLASS()
 class LUNARLANDER_API UPointEffectorComponent : public USphereComponent
@@ -27,11 +27,10 @@ public:
 	float Force;
 	UPROPERTY(EditAnywhere, Category = "Effector")
 	bool bIsPush;
-	
-private:
 
+private:
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent *Comp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION()
-	void OnEndOverlap(UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	void OnEndOverlap(UPrimitiveComponent *Comp, class AActor *OtherActor, class UPrimitiveComponent *OtherComp, int32 OtherBodyIndex);
 };

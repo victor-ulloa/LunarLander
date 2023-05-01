@@ -46,6 +46,9 @@ public:
 
 	void AddForce(FVector Direction, float Force);
 
+	UPROPERTY(EditAnywhere, Category = "Status")
+	bool bIsOnEndPlatform;
+
 private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	float VerticalThrusterForce;

@@ -44,6 +44,11 @@ void AShip::BeginPlay()
 void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if(bIsOnEndPlatform && ShipMesh->GetComponentVelocity().Length() == 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("WON"));
+	}
 }
 
 // Called to bind functionality to input
@@ -64,8 +69,6 @@ void AShip::AddForce(FVector Direction, float Force)
 void AShip::Thrust(const FInputActionValue &Value)
 {
 	const FVector2D ThrustValue = Value.Get<FVector2D>();
-
-	// UE_LOG(LogTemp, Display, TEXT("X: %f     Y: %f"), ThrustValue.X, ThrustValue.Y);
 
 	FVector VerticalForce = FVector(0, HorizontalThrusterForce * ThrustValue.X, VerticalThrusterForce * ThrustValue.Y);
 	ShipMesh->AddForce(VerticalForce, NAME_None, true);
