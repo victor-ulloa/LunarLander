@@ -44,6 +44,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void AddForce(FVector Direction, float Force);
+
 private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	float VerticalThrusterForce;

@@ -56,6 +56,11 @@ void AShip::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 	}
 }
 
+void AShip::AddForce(FVector Direction, float Force)
+{
+	ShipMesh->AddForce(Direction * Force, NAME_None, true);
+}
+
 void AShip::Thrust(const FInputActionValue &Value)
 {
 	const FVector2D ThrustValue = Value.Get<FVector2D>();
