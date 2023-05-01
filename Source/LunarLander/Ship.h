@@ -10,6 +10,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UCapsuleComponent;
+class UAudioComponent;
 struct FInputActionValue;
 
 UCLASS()
@@ -29,6 +30,8 @@ protected:
 	UCameraComponent *Camera;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *ShipMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
+	UAudioComponent *GasAudioComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputMappingContext *ShipMappingContext;
@@ -56,6 +59,7 @@ private:
 	float HorizontalThrusterForce;
 	UPROPERTY(EditAnywhere, Category = "Health")
 	float Health;
+	
 
 	UFUNCTION()    
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);

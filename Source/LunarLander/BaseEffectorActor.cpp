@@ -35,6 +35,7 @@ void ABaseEffectorActor::Tick(float DeltaTime)
 		{
 			Direction *= -1;
 		}
+		// UE_LOG(LogTemp, Display, TEXT("%f %f %f"), Direction.X, Direction.Y, Direction.Z);
 		PointEffectorComponent->Ship->AddForce(Direction, PointEffectorComponent->Force);
 	}
 }

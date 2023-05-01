@@ -5,6 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
 #include "BaseObstacle.h"
 
 // Sets default values
@@ -22,6 +23,9 @@ AShip::AShip()
 	Camera->SetupAttachment(RootComponent);
 	Camera->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	Camera->bUsePawnControlRotation = true;
+
+	GasAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("GasAudioComponent"));
+	GasAudioComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -45,7 +49,7 @@ void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(bIsOnEndPlatform && ShipMesh->GetComponentVelocity().Length() == 0)
+	if (bIsOnEndPlatform && ShipMesh->GetComponentVelocity().Length() == 0)
 	{
 		UE_LOG(LogTemp, Display, TEXT("WON"));
 	}
@@ -72,18 +76,28 @@ void AShip::Thrust(const FInputActionValue &Value)
 
 	FVector VerticalForce = FVector(0, HorizontalThrusterForce * ThrustValue.X, VerticalThrusterForce * ThrustValue.Y);
 	ShipMesh->AddForce(VerticalForce, NAME_None, true);
+
+	if (!GasAudioComponent->IsPlaying() && ThrustValue.Length() != 0)
+	{
+		GasAudioComponent->Play();
+	}
+	if (GasAudioComponent->IsPlaying() && ThrustValue.Length() == 0)
+	{
+		GasAudioComponent->Stop();
+	}
 }
 
-void AShip::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AShip::OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-	if(OtherActor->IsA(ABaseObstacle::StaticClass())) {
-		Health -= NormalImpulse.Length()/1000.f;
+	if (OtherActor->IsA(ABaseObstacle::StaticClass()))
+	{
+		Health -= NormalImpulse.Length() / 1000.f;
 
 		UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
 
-		if (Health <= 0){
+		if (Health <= 0)
+		{
 			UE_LOG(LogTemp, Display, TEXT("DIES"));
 		}
-
 	}
 }
