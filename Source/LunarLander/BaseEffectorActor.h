@@ -24,7 +24,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *Mesh;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	UPointEffectorComponent *PointEffector;
+	UPointEffectorComponent *PointEffectorComponent;
 
 public:
 	// Called every frame

@@ -14,8 +14,8 @@ ABaseEffectorActor::ABaseEffectorActor()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = Mesh;
 
-	PointEffector = CreateDefaultSubobject<UPointEffectorComponent>(TEXT("PointEffector"));
-	PointEffector->SetupAttachment(RootComponent);
+	PointEffectorComponent = CreateDefaultSubobject<UPointEffectorComponent>(TEXT("PointEffector"));
+	PointEffectorComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -28,14 +28,13 @@ void ABaseEffectorActor::BeginPlay()
 void ABaseEffectorActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (PointEffector && PointEffector->bIsShipInRange)
+	if (PointEffectorComponent && PointEffectorComponent->bIsShipInRange)
 	{
-		FVector Direction = UKismetMathLibrary::GetDirectionUnitVector(PointEffector->Ship->GetActorLocation(), PointEffector->GetComponentLocation());
-		if (PointEffector->bIsPush)
+		FVector Direction = UKismetMathLibrary::GetDirectionUnitVector(PointEffectorComponent->Ship->GetActorLocation(), PointEffectorComponent->GetComponentLocation());
+		if (PointEffectorComponent->bIsPush)
 		{
 			Direction *= -1;
 		}
-		UE_LOG(LogTemp, Display, TEXT("%f %f %f"), Direction.X, Direction.Y, Direction.Z);
-		PointEffector->Ship->AddForce(Direction, PointEffector->Force);
+		PointEffectorComponent->Ship->AddForce(Direction, PointEffectorComponent->Force);
 	}
 }
